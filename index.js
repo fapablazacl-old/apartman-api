@@ -1,32 +1,44 @@
+
 const express = require('express');
 const app = express();
 const router = express.Router;
 
-const providers = [
-    {
-        name: 'Scharfstein',
-        account: '1121-3231-1-23'
-    }, {
-        name: 'EBSA',
-        account: '000112-231-23'
-    },
-];
+const { ProviderDTO } = require('./app/provider.dto');
+const { ProviderController } = require('./app/provider.controller');
 
 const urlBase = '/api/v1';
+const port = 8000;
+
+const providerController = new ProviderController();
 
 app.get(`${urlBase}/providers`, (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(providers));
+  res.setHeader('Content-Type', 'application/json');
+
+  providerController.get().then((result) => {
+    res.end(JSON.stringify(result));
+  }).catch((err) => {
+    res.end(JSON.stringify(err));
+  });
 });
 
 app.get(`${urlBase}/providers/:id`, (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(providers[req.params.id]));
+  res.setHeader('Content-Type', 'application/json');
+  
+  providerController.get(parseInt(req.params.id)).then((result) => {
+    res.end(JSON.stringify(result));
+  }).catch((err) => {
+    res.end(JSON.stringify(err));
+  });
 });
 
-const port = 8000;
+/*
+app.put(`${urlBase}/providers`, (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(providers[req.params.id]));
+});
+*/
 
 const server = app.listen(port, () => {
-    const address = server.address();
-    console.log(`Listening at ${address.address}:${address.port}`);
+  const address = server.address();
+  console.log(`Listening at ${address.address}:${address.port}`);
 });
