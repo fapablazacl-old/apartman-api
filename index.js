@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const router = express.Router;
 
+const bodyParser = require('body-parser');
+
 const { ProviderDTO } = require('./app/provider.dto');
 const { ProviderController } = require('./app/provider.controller');
 
@@ -10,6 +12,8 @@ const urlBase = '/api/v1';
 const port = 8000;
 
 const providerController = new ProviderController();
+
+app.use(bodyParser());
 
 app.get(`${urlBase}/providers`, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -31,12 +35,18 @@ app.get(`${urlBase}/providers/:id`, (req, res) => {
   });
 });
 
-/*
-app.put(`${urlBase}/providers`, (req, res) => {
+app.post(`${urlBase}/providers`, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.end(JSON.stringify(providers[req.params.id]));
+  
+  console.log(req.body);
+  const provider = new ProviderDTO(req.body);
+
+  providerController.post(provider).then((result) => {
+    res.end(JSON.stringify(result));
+  }).catch((err) => {
+    res.end(JSON.stringify(err));
+  });
 });
-*/
 
 const server = app.listen(port, () => {
   const address = server.address();

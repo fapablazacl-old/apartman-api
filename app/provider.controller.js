@@ -52,6 +52,7 @@ class ProviderController {
   }
 
   async post(provider) {
+    provider.id = this.currentId;
     providers.push(provider);
 
     const payload = {
