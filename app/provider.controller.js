@@ -1,12 +1,5 @@
 
-/**
-rut:            fields.string(),
-name:           fields.string(),
-accountNumber:  fields.string(),
-accountBank:    fields.string(),
-email:          fields.string()
-*/
-
+/*
 const providers = [
   {
     id: 1,
@@ -31,26 +24,24 @@ const providers = [
     email: 'contacto@greenmax.cl'
   }  
 ];
+*/
+
+const { ProviderService } = require('./provider.service');
 
 class ProviderController {
   constructor() {
-    this.currentId = providers.length + 1;
+    this._providerService = new ProviderService();
   }
 
   async get(id) {
     if (id == null) {
-      return providers;
+      return this._providerService.getAll();
     }
 
-    for (let i=0; i<providers.length; i++) {
-      if (providers[i].id === id) {
-        return providers[i];
-      }
-    }
-
-    return null;
+    return this._providerService.get(id);
   }
 
+  /*
   async post(provider) {
     provider.id = this.currentId;
     providers.push(provider);
@@ -63,6 +54,7 @@ class ProviderController {
 
     return payload;
   }
+  */
 }
 
 module.exports = {
