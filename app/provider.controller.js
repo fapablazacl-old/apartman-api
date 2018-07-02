@@ -1,31 +1,4 @@
 
-/*
-const providers = [
-  {
-    id: 1,
-    rut: '767434928', 
-    name: 'REALE CHILE SEGUROS GENERALES S. A', 
-    accountNumber: '71573656', 
-    accountBank: 'Santander',
-    email: 'ana.bahamonde@reale.cl'
-  }, {
-    id: 2,
-    rut: '967944408', 
-    name: 'HEAVENWARD ASCENSORES', 
-    accountNumber: '18311962', 
-    accountBank: 'BCI',
-    email: 'cobranza@heavenward.cl'
-  }, {
-    id: 3,
-    rut: '141769480', 
-    name: 'GREENMAX', 
-    accountNumber: '15180100826', 
-    accountBank: 'Falabella', 
-    email: 'contacto@greenmax.cl'
-  }  
-];
-*/
-
 const { ProviderService } = require('./provider.service');
 
 class ProviderController {

@@ -9,7 +9,7 @@ const sequelize = new Sequelize (
   }
 );
 
-const Providers = sequelize.define('providers', {
+const Providers = sequelize.define('provider', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -32,13 +32,18 @@ const Providers = sequelize.define('providers', {
     allowNull: true
   },
   email: {
-    type: Sequelize.TEXT.CHAR(32),
+    type: Sequelize.CHAR(32),
     allowNull: true
   },
   phone: {
-    type: Sequelize.TEXT.INTEGER,
+    type: Sequelize.INTEGER,
     allowNull: true
   }
+}, {
+  timestamps: false,
+  freezeTableName: true,
+  tableName: 'providers',
+  schema: 'public'
 });
 
 module.exports = {

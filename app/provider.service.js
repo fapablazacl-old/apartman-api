@@ -3,12 +3,13 @@ const { Providers } = require('./model/providers');
 
 const fromProviderModelToDTO = (providerModel) => {
   return {
-    rut: providerDB.rut,
-    name: providerDB.name,
-    accountNumber: providerDB.account,
-    accountBank: providerDB.bank,
-    email: providerDB.email,
-    phone: providerDB.phone
+    id: providerModel.id,
+    rut: providerModel.rut,
+    name: providerModel.name,
+    accountNumber: providerModel.account,
+    accountBank: providerModel.bank,
+    email: providerModel.email,
+    phone: providerModel.phone
   };
 };
 
@@ -18,12 +19,21 @@ class ProviderService {
       where: {id}
     });
 
+    if (providerModel == null) {
+      return null;
+    }
+
     return fromProviderModelToDTO(providerModel);
   }
 
   async getAll() {
-    const providerModels = await Providers.findAll();
-    return providerModels.map(model => fromProviderModelToDTO(model));
+    try {
+      const providerModels = await Providers.findAll();
+      return providerModels.map(model => fromProviderModelToDTO(model));
+    } catch (err) {
+      console.log(err);
+      return [];
+    }
   }
 }
 
