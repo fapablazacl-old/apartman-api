@@ -2,11 +2,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { ProviderDTO } = require('./provider-dto');
-const { ProviderController } = require('./provider-controller');
+const { PersonDTO } = require('./person-dto');
+const { PersonController } = require('./person-controller');
 
-const baseName = '/providers'
-const controller = new ProviderController();
+const baseName = '/persons'
+const controller = new PersonController();
 
 router.get(`${baseName}`, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -32,7 +32,7 @@ router.post(`${baseName}`, (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   
   console.log(req.body);
-  const provider = new ProviderDTO(req.body);
+  const provider = new PersonDTO(req.body);
 
   controller.post(provider).then((result) => {
     res.end(JSON.stringify(result));

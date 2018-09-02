@@ -1,5 +1,5 @@
 
-const { Providers } = require('./model/providers');
+const { Providers } = require('../../db/model/providers');
 
 const fromProviderModelToDTO = (providerModel) => {
   return {

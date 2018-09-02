@@ -1,5 +1,5 @@
 
-const { ProviderService } = require('./provider.service');
+const { ProviderService } = require('./provider-service');
 
 class ProviderController {
   constructor() {
