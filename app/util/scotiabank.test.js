@@ -15,7 +15,7 @@ fs.readFile('./bns.csv', (err, data) => {
 */
 
 fs.readFile('./bsa.dat', (err, data) => {
-  const lines = data.toString();
+  const lines = data.toString().split('\n');
 
   importPayroll(lines).then((value) => {
     console.log(value);

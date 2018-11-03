@@ -35,7 +35,17 @@ const importBankStatement = async (lines) => {
   });
 };
 
-const importPayroll = async (csv) => {
+const importPayroll = async (lines) => {
+  const parseDate = (date) => {
+    const yearPart = date.substring(0, 4);
+    const monthPart = date.substring(4, 6);
+    const dayPart = date.substring(6, 8);
+
+    return new Date(yearPart, monthPart, dayPart);
+  };
+
+  const csv = lines.slice(1).join('\n');
+
   return new Promise((resolve, reject) => {
     parse(csv, {delimiter: ';', relax_column_count: true}, (err, rows) => {
       if (err) {
@@ -43,16 +53,16 @@ const importPayroll = async (csv) => {
       } else {
         const details = rows.map((row) => {
           return {
-            fechaPago: row[0],
+            fechaPago: parseDate(row[0]),
             rutBeneficiario: row[1],
             nombreBeneficiario: row[2].trim(),
             formaPago: row[3],
-            montoPago: row[4],
-            cuentaAbono: row[5],
+            montoPago: parseInt(row[4], 10),
+            cuentaAbono: parseInt(row[5], 10),
             bancoAbono: row[6].trim(),
             estado: row[7].trim(),
-            fechaReabono: row[8],
-            motivoRechazo: row[9].trim()
+            fechaReabono: row[8] === '00000000' ? null : parseDate(row[8]),
+            motivoRechazo: row[9].trim() === 'Sin Observaciones' ? null : row[9].trim()
           };
         });
 
