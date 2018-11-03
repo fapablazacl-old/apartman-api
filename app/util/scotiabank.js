@@ -51,3 +51,4 @@ fs.readFile('./bns.csv', (err, data) => {
     console.log(err);
   });
 });
+  
