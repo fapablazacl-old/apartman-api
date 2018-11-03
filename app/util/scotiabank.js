@@ -44,6 +44,13 @@ const importPayroll = async (lines) => {
     return new Date(yearPart, monthPart, dayPart);
   };
 
+  const parseRut = (rut) => {
+    const base = parseInt(rut.substring(0, rut.length - 1), 10);
+    const digit = rut.substring(rut.length - 1, rut.length);
+
+    return `${base}-${digit}`;
+  };
+
   const csv = lines.slice(1).join('\n');
 
   return new Promise((resolve, reject) => {
@@ -54,7 +61,7 @@ const importPayroll = async (lines) => {
         const details = rows.map((row) => {
           return {
             fechaPago: parseDate(row[0]),
-            rutBeneficiario: row[1],
+            rutBeneficiario: parseRut(row[1]),
             nombreBeneficiario: row[2].trim(),
             formaPago: row[3],
             montoPago: parseInt(row[4], 10),
