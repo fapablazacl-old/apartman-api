@@ -37,22 +37,22 @@ const importBankStatement = async (lines) => {
 
 const importPayroll = async (csv) => {
   return new Promise((resolve, reject) => {
-    parse(csv, {delimiter: ';'}, (err, rows) => {
+    parse(csv, {delimiter: ';', relax_column_count: true}, (err, rows) => {
       if (err) {
         reject(err);
       } else {
-        // Fec.Pago;Rut Beneficiario;Nombre Beneficiario;Forma de Pago;Monto Pago;N?Cuenta Abono;Banco Abono;Estado;Fecha Reabono;Motivo Rechazo
-        const details = rows.map((rows) => {
+        const details = rows.map((row) => {
           return {
             fechaPago: row[0],
             rutBeneficiario: row[1],
-            nombreBeneficiario: row[2],
+            nombreBeneficiario: row[2].trim(),
             formaPago: row[3],
             montoPago: row[4],
-            bancoAbono: row[5],
-            estado: row[6],
-            fechaReabono: row[7],
-            motivoRechazo: row[8]
+            cuentaAbono: row[5],
+            bancoAbono: row[6].trim(),
+            estado: row[7].trim(),
+            fechaReabono: row[8],
+            motivoRechazo: row[9].trim()
           };
         });
 
