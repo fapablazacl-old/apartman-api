@@ -1,6 +1,15 @@
 
 const parse = require('csv-parse');
 
+const parseDate = (date) => {
+  const fechaParts = date.split('/').map(part => parseInt(part, 10));
+  return new Date(fechaParts[2], fechaParts[1], fechaParts[0]);
+};
+
+const parseAmount = (amount) => {
+  return amount === '' ? null : parseInt(amount.split('.').join(''), 10);
+};
+
 const importMovements = async (lines) => {
   const csv = lines.slice(22).join('\n');
 
@@ -9,17 +18,14 @@ const importMovements = async (lines) => {
       if (err) {
         reject(err);
       } else {
-        // const headers = output[0];
-        // const rows = output.slice(1);
-      
         const movements = rows.map((row) => {
           return {
-            fecha: row[1],
+            fecha: parseDate(row[1]),
             descripcion: row[2],
-            ndoc: row[3],
-            cargos: row[4],
-            abonos: row[5],
-            saldos: row[6]
+            ndoc: parseInt(row[3], 10) === 0 ? null : row[3],
+            cargos: parseAmount(row[4]),
+            abonos: parseAmount(row[5]),
+            saldos: parseAmount(row[6])
           };
         });
 
