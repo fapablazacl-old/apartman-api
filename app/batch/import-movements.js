@@ -24,6 +24,7 @@ Promise.all(files.map((file) => {
 
   Promise.all(movements.map((movement) => {
     return models.Movements.create({
+      bank: 'SB',
       date: movement.fecha,
       amount: movement.cargos != null ? -movement.cargos : movement.abonos,
       description: movement.descripcion,

@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Movements = sequelize.define('movement', {
+  const Payrolls = sequelize.define('payroll', {
     id: {
       type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
@@ -32,9 +32,9 @@ module.exports = (sequelize) => {
   }, {
     timestamps: false,
     freezeTableName: true,
-    tableName: 'movements',
+    tableName: 'payrolls',
     schema: 'public'
   });
 
-  return Movements;
+  return Payrolls;
 };
