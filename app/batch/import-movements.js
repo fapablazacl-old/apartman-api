@@ -14,22 +14,15 @@ const files = [
     'data/scotiabank/bns (4).csv'
 ];
 
-const movements = files
-  .map((file) => {
-    return fs.readFileSync(file).toString().split('\n');
-  })
-  .reduce((previous, current) => {
-    console.log(previous);
-    const result = [];
-
-    result.concat(previous);
-    result.concat(current);
-
-    return result;
+Promise.all(files.map((file) => {
+  const lines = fs.readFileSync(file).toString().split('\n');
+  return scotiabank.importBankStatement(lines);
+})).then((statements) => {
+  const statement = statements.reduce((previous, current) => {
+    return previous.concat(current);
   });
 
-scotiabank.importBankStatement(movements).then((statement) => {
-  console.log(statement);
+  console.log(statement.length);
 }).catch((err) => {
   console.log(err);
 });
