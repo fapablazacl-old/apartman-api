@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  apartman-postgres:
+    image: postgres:10-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    
+  apartman-adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
