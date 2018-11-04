@@ -30,25 +30,11 @@ Promise.all(files.map((file) => {
       documentNumber: movement.ndoc,
     });
   })).then((results) => {
+    console.log('Done!');
     console.log(results);
   }).catch((err) => {
     console.log(err);
   });
-
-  console.log('Done!');
 }).catch((err) => {
   console.log(err);
 });
-
-/*
-fs.readFile('./bsa.dat', (err, data) => {
-  const lines = data.toString().split('\n');
-
-  importPayroll(lines).then((nomina) => {
-    console.log(nomina.detalles);
-    // console.log(nomina.detalles.filter(detalle => detalle.estado !== 'Pagado'));
-  }).catch((err) => {
-    console.log(err);
-  });
-});
-*/

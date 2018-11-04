@@ -11,6 +11,7 @@ CREATE TABLE "providers" (
     CONSTRAINT providers_pk PRIMARY KEY ("rut")
 );
 
+/*
 CREATE TABLE "banks" (
     "name" CHAR(4),
     "desc" VARCHAR(32)
@@ -20,11 +21,12 @@ CREATE TABLE "accounts" (
     "rut" INT NOT NULL,
     "bank" VARCHAR(4),
 );
+*/
 
 CREATE TABLE "movements" (
-
-);
-
-CREATE TABLE "checks" (
-
+    "id" SERIAL NOT NULL PRIMARY KEY,
+    "date" DATETIME NOT NULL,
+    "amount" VARCHAR(64) NOT NULL,
+    "documentNumber" BIGINT,
+    "description" VARCHAR(64)
 );
