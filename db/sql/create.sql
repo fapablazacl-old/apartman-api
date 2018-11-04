@@ -1,7 +1,5 @@
-DROP DATABASE apartman;
-CREATE DATABASE apartman;
 
-CREATE TABLE "public.providers" (
+CREATE TABLE "providers" (
     "rut" INT NOT NULL,
     "name" VARCHAR(64) NOT NULL,
     "account" BIGINT,
@@ -12,7 +10,7 @@ CREATE TABLE "public.providers" (
     CONSTRAINT providers_pk PRIMARY KEY ("rut")
 );
 
-CREATE TABLE "public.movements" (
+CREATE TABLE "movements" (
     "id" SERIAL NOT NULL PRIMARY KEY,
     "date" DATE NOT NULL,
     "amount" VARCHAR(64) NOT NULL,
