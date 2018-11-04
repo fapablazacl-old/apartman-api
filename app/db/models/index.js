@@ -10,5 +10,5 @@ const sequelize = new Sequelize (
 
 module.exports = {
   sequelize,
-  Movements: require('./providers')(sequelize)
+  Movements: require('./movements')(sequelize)
 };

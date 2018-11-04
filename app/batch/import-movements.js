@@ -18,11 +18,24 @@ Promise.all(files.map((file) => {
   const lines = fs.readFileSync(file).toString().split('\n');
   return scotiabank.importBankStatement(lines);
 })).then((statements) => {
-  const statement = statements.reduce((previous, current) => {
+  const movements = statements.reduce((previous, current) => {
     return previous.concat(current);
   });
 
-  console.log(statement.length);
+  Promise.all(movements.map((movement) => {
+    return models.Movements.create({
+      date: movement.fecha,
+      amount: movement.cargos != null ? -movement.cargos : movement.abonos,
+      description: movement.descripcion,
+      documentNumber: movement.ndoc,
+    });
+  })).then((results) => {
+    console.log(results);
+  }).catch((err) => {
+    console.log(err);
+  });
+
+  console.log('Done!');
 }).catch((err) => {
   console.log(err);
 });

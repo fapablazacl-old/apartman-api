@@ -4,32 +4,33 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
   const Providers = sequelize.define('provider', {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
     rut: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DataTypes.INTEGER,
       allowNull: false
     },
     name: {
-      type: Sequelize.CHAR(64),
+      type: Sequelize.DataTypes.STRING(64),
       allowNull: false
     },
     account: {
-      type: Sequelize.BIGINT,
+      type: Sequelize.DataTypes.BIGINT,
       allowNull: true
     },
     bank: {
-      type: Sequelize.CHAR(32),
+      type: Sequelize.DataTypes.STRING(32),
       allowNull: true
     },
     email: {
-      type: Sequelize.CHAR(32),
+      type: Sequelize.DataTypes.STRING(32),
       allowNull: true
     },
     phone: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DataTypes.INTEGER,
       allowNull: true
     }
   }, {

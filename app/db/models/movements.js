@@ -4,24 +4,25 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
   const Movements = sequelize.define('movement', {
     id: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DataTypes.INTEGER,
       primaryKey: true,
+      autoIncrement: true,
       allowNull: false
     },
     date: {
-      type: Sequelize.DATEONLY,
+      type: Sequelize.DataTypes.DATEONLY,
       allowNull: false
     },
     amount: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.DataTypes.INTEGER,
       allowNull: false
     },
     documentNumber: {
-      type: Sequelize.INTEGER,
-      allowNull: false
+      type: Sequelize.DataTypes.INTEGER,
+      allowNull: true
     },
     description: {
-      type: Sequelize.VARCHAR(1024),
+      type: Sequelize.DataTypes.STRING(1024),
       allowNull: false
     }
   }, {
