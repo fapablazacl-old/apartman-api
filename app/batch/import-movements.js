@@ -7,11 +7,11 @@ const models = require('../db/models');
 const fs = require('fs');
 
 const files = [
-    'data/scotiabank/bns (0).csv',
-    'data/scotiabank/bns (1).csv',
-    'data/scotiabank/bns (2).csv',
-    'data/scotiabank/bns (3).csv',
-    'data/scotiabank/bns (4).csv'
+    'data/scotiabank/statements/bns (0).csv',
+    'data/scotiabank/statements/bns (1).csv',
+    'data/scotiabank/statements/bns (2).csv',
+    'data/scotiabank/statements/bns (3).csv',
+    'data/scotiabank/statements/bns (4).csv'
 ];
 
 Promise.all(files.map((file) => {
@@ -34,8 +34,10 @@ Promise.all(files.map((file) => {
     console.log('Done!');
     console.log(results);
   }).catch((err) => {
+    console.log('Error!');
     console.log(err);
   });
 }).catch((err) => {
+  console.log('Error!');
   console.log(err);
 });

@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     bank: {
-      type: Sequelize.DataTypes.VARCHAR(8),
+      type: Sequelize.DataTypes.STRING(8),
       allowNull: false
     },
     date: {
@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       type: Sequelize.DataTypes.INTEGER,
       allowNull: false
     },
-    documentNumber: {
+    document_number: {
       type: Sequelize.DataTypes.INTEGER,
       allowNull: true
     },
@@ -32,8 +32,7 @@ module.exports = (sequelize) => {
   }, {
     timestamps: false,
     freezeTableName: true,
-    tableName: 'movements',
-    schema: 'public'
+    tableName: 'movements'
   });
 
   return Movements;

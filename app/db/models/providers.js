@@ -36,8 +36,7 @@ module.exports = (sequelize) => {
   }, {
     timestamps: false,
     freezeTableName: true,
-    tableName: 'providers',
-    schema: 'public'
+    tableName: 'providers'
   });
 
   return Providers;
