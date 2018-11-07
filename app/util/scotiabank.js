@@ -4,7 +4,7 @@ const parse = require('csv-parse');
 const importBankStatement = async (lines) => {
   const parseDate = (date) => {
     const fechaParts = date.split('/').map(part => parseInt(part, 10));
-    return new Date(fechaParts[2], fechaParts[1], fechaParts[0]);
+    return new Date(fechaParts[2], fechaParts[1] - 1, fechaParts[0]);
   };
 
   const parseAmount = (amount) => {
