@@ -19,12 +19,14 @@ Promise.all(files.map((file) => {
   return scotiabank.importPayroll(lines);
 })).then((payrolls) => {
   Promise.all(payrolls.map((payroll) => {
-    return models.Payrolls.create({
+    models.Payrolls.create({
       bank: 'SB',
       date: movement.fecha,
       amount: movement.cargos != null ? -movement.cargos : movement.abonos,
       description: movement.descripcion,
       documentNumber: movement.ndoc,
+    }).then((dbPayroll) => {
+      
     });
   })).then((results) => {
     console.log(results);

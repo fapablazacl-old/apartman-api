@@ -9,31 +9,26 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       allowNull: false
     },
-    bank: {
-      type: Sequelize.DataTypes.VARCHAR(8),
-      allowNull: false
-    },
     date: {
       type: Sequelize.DataTypes.DATEONLY,
       allowNull: false
     },
-    amount: {
-      type: Sequelize.DataTypes.INTEGER,
-      allowNull: false
-    },
-    documentNumber: {
+    movement_id: {
       type: Sequelize.DataTypes.INTEGER,
       allowNull: true
-    },
-    description: {
-      type: Sequelize.DataTypes.STRING(1024),
-      allowNull: false
     }
   }, {
     timestamps: false,
     freezeTableName: true,
     tableName: 'payrolls'
   });
+
+  Payrolls.associate = (models) => {
+    Payrolls.belongsTo(models.Movements, {
+      foreignKey: 'movement_id',
+      constraints: false
+    });
+  };
 
   return Payrolls;
 };

@@ -1,15 +1,4 @@
 
-CREATE TABLE providers (
-    rut INT NOT NULL,
-    "name" VARCHAR(64) NOT NULL,
-    account BIGINT,
-    bank VARCHAR(32),
-    email VARCHAR(32),
-    phone INT,
-
-    CONSTRAINT providers_pk PRIMARY KEY (rut)
-);
-
 CREATE TABLE movements (
     id INT NOT NULL IDENTITY PRIMARY KEY,
     bank CHAR(2) NOT NULL,
@@ -36,4 +25,22 @@ CREATE TABLE payroll_details (
     bank VARCHAR(64) NOT NULL,
     "status" VARCHAR(64) NOT NULL,
     refund_date DATE NOT NULL
+);
+
+CREATE TABLE checks (
+    id INT NOT NULL IDENTITY PRIMARY KEY,
+    "serial" INT NOT NULL,
+    bank VARCHAR(4) NOT NULL,
+    amount INT NOT NULL
+);
+
+CREATE TABLE providers (
+    rut INT NOT NULL,
+    "name" VARCHAR(64) NOT NULL,
+    account BIGINT,
+    bank VARCHAR(32),
+    email VARCHAR(32),
+    phone INT,
+
+    CONSTRAINT providers_pk PRIMARY KEY (rut)
 );

@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     payroll_id: {
-      type: Sequelize.DataTypes.VARCHAR(8),
+      type: Sequelize.DataTypes.INTEGER,
       allowNull: false
     },
     rut: {
@@ -46,13 +46,17 @@ module.exports = (sequelize) => {
       allowNull: false
     },
   }, {
-    timestamps: false,
-    freezeTableName: true,
-    tableName: 'payroll_details'
-  });
+      timestamps: false,
+      freezeTableName: true,
+      tableName: 'payroll_details'
+    });
 
   PayrollDetails.associate = (models) => {
-    PayrollDetails.belongsTo(models.Payroll);
+    PayrollDetails.belongsTo(models.Payroll, {
+      foreignKey: 'payroll_id',
+      constraints: false,
+      as: 'image'
+    });
   };
 
   return PayrollDetails;
