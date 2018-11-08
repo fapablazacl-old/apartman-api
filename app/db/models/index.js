@@ -22,5 +22,7 @@ const sequelize = new Sequelize (
 
 module.exports = {
   sequelize,
-  Movements: require('./movements')(sequelize)
+  Movements: require('./movements')(sequelize),
+  Payrolls: require('./payrolls')(sequelize),
+  PayrollDetails: require('./payroll_details')(sequelize)
 };

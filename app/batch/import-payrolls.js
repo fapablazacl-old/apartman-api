@@ -18,16 +18,8 @@ Promise.all(files.map((file) => {
   const lines = fs.readFileSync(file).toString().split('\n');
   return scotiabank.importPayroll(lines);
 })).then((payrolls) => {
-
-    
-
-
-  const movements = statements.reduce((previous, current) => {
-    return previous.concat(current);
-  });
-
-  Promise.all(movements.map((movement) => {
-    return models.Movements.create({
+  Promise.all(payrolls.map((payroll) => {
+    return models.Payrolls.create({
       bank: 'SB',
       date: movement.fecha,
       amount: movement.cargos != null ? -movement.cargos : movement.abonos,
@@ -35,11 +27,9 @@ Promise.all(files.map((file) => {
       documentNumber: movement.ndoc,
     });
   })).then((results) => {
-    console.log('Done!');
     console.log(results);
-  }).catch((err) => {
-    console.log(err);
   });
 }).catch((err) => {
+  console.log('Error!');
   console.log(err);
 });

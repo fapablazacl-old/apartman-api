@@ -27,13 +27,13 @@ CREATE TABLE payrolls (
 
 CREATE TABLE payroll_details (
     id INT NOT NULL IDENTITY PRIMARY KEY,
-    payroll_id INTEGER REFERENCES payrolls(id),  
+    payroll_id INTEGER NOT NULL REFERENCES payrolls(id),  
     rut INT NOT NULL,
     "name" VARCHAR(64) NOT NULL,
     "date" DATE NOT NULL,
     amount INTEGER NOT NULL,
     account VARCHAR(64) NOT NULL,
     bank VARCHAR(64) NOT NULL,
-    status VARCHAR(64) NOT NULL,
+    "status" VARCHAR(64) NOT NULL,
     refund_date DATE NOT NULL
 );
