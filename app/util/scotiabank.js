@@ -1,7 +1,7 @@
 
 const parse = require('csv-parse');
 
-const importBankStatement = async (lines) => {
+const importBankStatementCSV = async (lines) => {
   const parseDate = (date) => {
     const fechaParts = date.split('/').map(part => parseInt(part, 10));
     return new Date(fechaParts[2], fechaParts[1] - 1, fechaParts[0]);
@@ -35,11 +35,66 @@ const importBankStatement = async (lines) => {
   });
 };
 
-const importPayroll = async (lines) => {
+const importBankStatementDAT = async (lines) => {
   const parseDate = (date) => {
-    const yearPart = date.substring(0, 4);
-    const monthPart = date.substring(4, 6);
-    const dayPart = date.substring(6, 8);
+    const dayPart = parseInt(date.substring(0, 2));
+    const monthPart = parseInt(date.substring(2, 4));
+    const yearPart = parseInt(date.substring(4, 8));
+    
+    return new Date(yearPart, monthPart - 1, dayPart);
+  };
+
+  const parseAmount = (rawAmount) => {
+    const amount = rawAmount.trim();
+
+    if (amount === '') {
+      return null;
+    }
+
+    const commaIndex = amount.indexOf(',');
+
+    if (commaIndex !== -1) {
+      const amountTemp = amount.substring(0, amount.indexOf(','));
+      return parseInt(amountTemp, 10);  
+    } else {
+      return parseInt(amount, 10);
+    }
+  };
+
+  const parseCheckNumber = (checkNumber) => {
+    const number = parseInt(checkNumber, 10);
+    return number === 0 ? null : number;
+  };
+
+  const csv = lines.slice(8).join('\n');
+
+  return new Promise((resolve, reject) => {
+    parse(csv, {delimiter: ';'}, (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        const movements = rows.map((row) => {
+          return {
+            fecha: parseDate(row[0]),
+            descripcion: row[1].trim(),
+            ndoc: parseCheckNumber(row[2]),
+            cargos: parseAmount(row[3]),
+            abonos: parseAmount(row[4]),
+            saldos: parseAmount(row[5])
+          };
+        });
+
+        resolve(movements);
+      }
+    });
+  });
+};
+
+const importPayrollDAT = async (lines) => {
+  const parseDate = (date) => {
+    const yearPart = parseInt(date.substring(0, 4));
+    const monthPart = parseInt(date.substring(4, 6));
+    const dayPart = parseInt(date.substring(6, 8));
 
     return new Date(yearPart, monthPart, dayPart);
   };
@@ -92,6 +147,7 @@ const importPayroll = async (lines) => {
 };
 
 module.exports = {
-  importBankStatement,
-  importPayroll
+  importBankStatementCSV,
+  importBankStatementDAT,
+  importPayrollDAT
 };
