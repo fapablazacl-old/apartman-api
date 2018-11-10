@@ -34,6 +34,6 @@ CREATE TABLE payroll_details (
     amount INTEGER NOT NULL,
     account VARCHAR(64) NOT NULL,
     bank VARCHAR(64) NOT NULL,
-    status VARCHAR(64) NOT NULL,
-    refund_date DATE NOT NULL
+    "status" VARCHAR(64) NOT NULL,
+    refund_date DATE
 );

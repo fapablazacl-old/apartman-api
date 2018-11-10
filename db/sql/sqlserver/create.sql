@@ -8,6 +8,18 @@ CREATE TABLE movements (
     description VARCHAR(128)
 );
 
+/*
+CREATE VIEW felbar_egresos AS
+	SELECT 
+		"date" AS "fecha",
+		-amount AS "monto",
+		document_number AS "numero_documento",
+		"description" AS "glosa"
+	FROM movements 
+	WHERE amount < 0
+	ORDER BY "date" ASC
+	*/
+
 CREATE TABLE payrolls (
     id INT NOT NULL IDENTITY PRIMARY KEY,
     "date" DATE NOT NULL,
@@ -24,7 +36,7 @@ CREATE TABLE payroll_details (
     account VARCHAR(64) NOT NULL,
     bank VARCHAR(64) NOT NULL,
     "status" VARCHAR(64) NOT NULL,
-    refund_date DATE NOT NULL
+    refund_date DATE
 );
 
 CREATE TABLE checks (

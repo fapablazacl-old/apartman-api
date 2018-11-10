@@ -12,7 +12,7 @@ const importBankStatement = async (lines) => {
   };
 
   const csv = lines.slice(22).join('\n');
-
+// parseInt('08700673', 10) === 0 ? null : '08700673',
   return new Promise((resolve, reject) => {
     parse(csv, {delimiter: ';'}, (err, rows) => {
       if (err) {
@@ -22,7 +22,7 @@ const importBankStatement = async (lines) => {
           return {
             fecha: parseDate(row[1]),
             descripcion: row[2],
-            ndoc: parseInt(row[3], 10) === 0 ? null : row[3],
+            ndoc: parseInt(row[3], 10) === 0 ? null : parseInt(row[3], 10),
             cargos: parseAmount(row[4]),
             abonos: parseAmount(row[5]),
             saldos: parseAmount(row[6])
@@ -44,11 +44,19 @@ const importPayroll = async (lines) => {
     return new Date(yearPart, monthPart, dayPart);
   };
 
+  /*
   const parseRut = (rut) => {
     const base = parseInt(rut.substring(0, rut.length - 1), 10);
     const digit = rut.substring(rut.length - 1, rut.length);
 
     return `${base}-${digit}`;
+  };
+  */
+
+  const parseRut = (rut) => {
+    const base = parseInt(rut.substring(0, rut.length - 1), 10);
+
+    return `${base}`;
   };
 
   const csv = lines.slice(1).join('\n');

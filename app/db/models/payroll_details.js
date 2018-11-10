@@ -43,7 +43,7 @@ module.exports = (sequelize) => {
     },
     refund_date: {
       type: Sequelize.DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
   }, {
       timestamps: false,

@@ -28,7 +28,7 @@ Promise.all(files.map((file) => {
       date: movement.fecha,
       amount: movement.cargos != null ? -movement.cargos : movement.abonos,
       description: movement.descripcion,
-      documentNumber: movement.ndoc,
+      document_number: movement.ndoc,
     });
   })).then((results) => {
     console.log('Done!');
