@@ -11,8 +11,8 @@ const importBankStatement = async (lines) => {
     return amount === '' ? null : parseInt(amount.split('.').join(''), 10);
   };
 
-  const csv = lines.slice(22).join('\n');
-// parseInt('08700673', 10) === 0 ? null : '08700673',
+  const csv = lines.slice(21).join('\n');
+
   return new Promise((resolve, reject) => {
     parse(csv, {delimiter: ';'}, (err, rows) => {
       if (err) {
