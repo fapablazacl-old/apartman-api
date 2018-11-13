@@ -16,6 +16,14 @@ module.exports = (sequelize) => {
     movement_id: {
       type: Sequelize.DataTypes.INTEGER,
       allowNull: true
+    },
+    amount: {
+      type: Sequelize.DataTypes.INTEGER,
+      allowNull: false
+    },
+    status: {
+      type: Sequelize.DataTypes.STRING(64),
+      allowNull: false
     }
   }, {
     timestamps: false,

@@ -17,13 +17,14 @@ CREATE VIEW felbar_egresos AS
 		"description" AS "glosa"
 	FROM movements 
 	WHERE amount < 0
-	ORDER BY "date" ASC
 	*/
 
 CREATE TABLE payrolls (
     id INT NOT NULL IDENTITY PRIMARY KEY,
+    movement_id INTEGER REFERENCES movements(id),
     "date" DATE NOT NULL,
-    movement_id INTEGER REFERENCES movements(id)
+    amount INTEGER NOT NULL,
+    "status" VARCHAR(64) NOT NULL,
 );
 
 CREATE TABLE payroll_details (

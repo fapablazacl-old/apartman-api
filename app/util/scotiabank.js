@@ -37,9 +37,11 @@ const importBankStatementCSV = async (lines) => {
 
 const importBankStatementDAT = async (lines) => {
   const parseDate = (date) => {
-    const dayPart = parseInt(date.substring(0, 2));
-    const monthPart = parseInt(date.substring(2, 4));
-    const yearPart = parseInt(date.substring(4, 8));
+    const trimmedDate = date.trim();
+
+    const dayPart = parseInt(trimmedDate.substring(0, 2));
+    const monthPart = parseInt(trimmedDate.substring(2, 4));
+    const yearPart = parseInt(trimmedDate.substring(4, 8));
     
     return new Date(yearPart, monthPart - 1, dayPart);
   };
@@ -66,7 +68,7 @@ const importBankStatementDAT = async (lines) => {
     return number === 0 ? null : number;
   };
 
-  const csv = lines.slice(8).join('\n');
+  const csv = lines.slice(9).join('\n');
 
   return new Promise((resolve, reject) => {
     parse(csv, {delimiter: ';'}, (err, rows) => {

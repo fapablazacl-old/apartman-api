@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "import-movements": "node app/batch/import-movements-dat.js"
   },
   "keywords": [],
   "author": "Felipe Apablaza",
