@@ -16,15 +16,24 @@ scotiabank.importBankStatementDAT(lines).then((result) => {
 
   Promise.all(movements.map((movement, index) => {
     const line = lines[index];
+    const hashId = md5(line);
 
-    return models.Movements.create({
-      hashId: md5(line),
-      bank: 'SB',
-      date: movement.fecha,
-      amount: movement.cargos != null ? -movement.cargos : movement.abonos,
-      description: movement.descripcion,
-      document_number: movement.ndoc,
+    let movementDb = models.Movements.find({
+      where: { hashId }
     });
+
+    if (movementDb == null) {
+      movementDb = models.Movements.create({
+        hashId: md5(line),
+        bank: 'SB',
+        date: movement.fecha,
+        amount: movement.cargos != null ? -movement.cargos : movement.abonos,
+        description: movement.descripcion,
+        document_number: movement.ndoc,
+      })
+    }
+
+    return movementDb;
   })).then((results) => {
     console.log('Done!');
     console.log(results);
