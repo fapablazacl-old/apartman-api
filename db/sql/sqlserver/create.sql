@@ -1,12 +1,15 @@
 
 CREATE TABLE movements (
     id INT NOT NULL IDENTITY PRIMARY KEY,
+    hashId CHAR(32) NOT NULL,
     bank CHAR(2) NOT NULL,
     "date" DATE NOT NULL,
     amount INTEGER NOT NULL,
     document_number BIGINT,
-    description VARCHAR(128)
+    "description" VARCHAR(128)
 );
+
+CREATE NONCLUSTERED INDEX ix_movements_hashid ON movements(hashId);
 
 /*
 CREATE VIEW felbar_egresos AS

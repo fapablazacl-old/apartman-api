@@ -68,7 +68,8 @@ const importBankStatementDAT = async (lines) => {
     return number === 0 ? null : number;
   };
 
-  const csv = lines.slice(9).join('\n');
+  const slicedLines = lines.slice(9);
+  const csv = slicedLines.join('\n');
 
   return new Promise((resolve, reject) => {
     parse(csv, {delimiter: ';'}, (err, rows) => {
@@ -86,7 +87,7 @@ const importBankStatementDAT = async (lines) => {
           };
         });
 
-        resolve(movements);
+        resolve({movements, lines: slicedLines});
       }
     });
   });

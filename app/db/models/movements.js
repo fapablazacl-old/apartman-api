@@ -9,6 +9,10 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       allowNull: false
     },
+    hashId: {
+      type: Sequelize.DataTypes.STRING(32),
+      allowNull: false,
+    },
     bank: {
       type: Sequelize.DataTypes.STRING(8),
       allowNull: false
