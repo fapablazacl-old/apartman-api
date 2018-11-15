@@ -96,25 +96,22 @@ const importBankStatementDAT = async (lines) => {
 const importPayrollDAT = async (lines) => {
   const parseDate = (date) => {
     const yearPart = parseInt(date.substring(0, 4));
-    const monthPart = parseInt(date.substring(4, 6));
+    const monthPart = parseInt(date.substring(4, 6)) - 1;
     const dayPart = parseInt(date.substring(6, 8));
 
     return new Date(yearPart, monthPart, dayPart);
   };
 
-  /*
-  const parseRut = (rut) => {
-    const base = parseInt(rut.substring(0, rut.length - 1), 10);
-    const digit = rut.substring(rut.length - 1, rut.length);
-
-    return `${base}-${digit}`;
-  };
-  */
-
   const parseRut = (rut) => {
     const base = parseInt(rut.substring(0, rut.length - 1), 10);
 
     return `${base}`;
+    /*
+    const base = parseInt(rut.substring(0, rut.length - 1), 10);
+    const digit = rut.substring(rut.length - 1, rut.length);
+
+    return `${base}-${digit}`;
+    */
   };
 
   const csv = lines.slice(1).join('\n');
