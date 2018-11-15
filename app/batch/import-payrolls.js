@@ -14,23 +14,40 @@ const genPayrolls = (path) => {
 
 const files = genPayrolls('data/scotiabank/payrolls/');
 
+const computePayrollStatus = (detalles) => {
+  let status = null;
+
+  for (let i=0; i<detalles.length; i++) {
+    status = detalles[i].estado;
+
+    if (status === 'Pagado') {
+      break;
+    }
+  }
+
+  return status;
+};
+
 Promise.all(files.map((file) => {
   const lines = fs.readFileSync(file).toString().split('\n');
-  return scotiabank.importPayroll();
+  return scotiabank.importPayrollDAT(lines);
 })).then((payrolls) => {
   Promise.all(payrolls.map((payroll) => {
-    models.Payrolls.create({
+    const dbPayrollParams = {
       bank: 'SB',
       date: payroll.detalles[0].fechaPago,
-      amount: payroll.detalles.reduce((previous, current) => {
-        return previous + current;
-      }, 0)
-    }).then((dbPayroll) => {
+      amount: payroll.detalles
+        .map(detalle => detalle.montoPago)
+        .reduce( (prev, current) => prev + current),
+      status: computePayrollStatus(payroll.detalles),
+    };
+
+    models.Payrolls.create(dbPayrollParams).then((dbPayroll) => {
       const dbPayrollId = dbPayroll.id;
 
       return Promise.all(
         payroll.detalles.map((detalle) => {
-          models.PayrollDetails.create({
+          const dbPayrollDetailParams = {
             payroll_id: dbPayrollId,
             rut: detalle.rutBeneficiario,
             name: detalle.nombreBeneficiario,
@@ -40,7 +57,9 @@ Promise.all(files.map((file) => {
             bank: detalle.bancoAbono,
             status: detalle.estado,
             refund_date: detalle.fechaReabono
-          });
+          };
+
+          return models.PayrollDetails.create(dbPayrollDetailParams);
         })
       );
     });
