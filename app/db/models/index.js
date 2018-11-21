@@ -13,8 +13,8 @@ const sequelize = new Sequelize (
 
 const sequelize = new Sequelize (
   'apartman',
-  'apartman',
-  'apartman', {
+  'sa',
+  'sqlserver', {
     host: 'localhost',
     dialect: 'mssql'
   }
