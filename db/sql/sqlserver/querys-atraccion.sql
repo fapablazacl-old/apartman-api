@@ -75,14 +75,27 @@ SELECT sum(AMOUNT) FROM movements WHERE "date" >= '2018-09-01' AND "date" <= '20
 -- -47948 Octubre
 -- -62622 Septiembre
 
-
-
 SELECT * FROM movements WHERE "date" >= '2018-09-01' AND "date" <= '2018-09-30' AND amount = -250000;
 SELECT * FROM payroll_details WHERE "name" LIKE '%greenmax%' AND "status"='Pagado' ORDER BY "date";
-
 
 -- reintegros prontomatic
 SELECT * FROM movements WHERE amount > 0 AND "description" LIKE '%deposito%' ORDER BY "date";
 
 -- aguas
 SELECT * FROM movements WHERE amount < 0 AND "description" LIKE '%pac%' ORDER BY "date";
+
+-- determinar egresos de cuenta corriente a justificar
+SELECT -amount, "date", document_number, "description" FROM movements 
+WHERE amount < 0 AND 
+	"description" NOT IN (
+		'PAGO COTIZ.PREVIRED', 
+		'COMISION VISUALIZACION DOC WEB', 
+		'IMPUESTO VISUALIZACION DOC WEB', 
+		'IVA COMISION', 
+		'I.T.E. SOBREGIRO NO PACTADO', 
+		'INTERESES POR SOBREGIRO',
+		'COMISION SERVICIO MULTIPAGOS',
+		'IVA POR COMISION/CARGOS',
+		'COM.MANTEN. SCOTIAMAX'
+	)
+ORDER BY "id";
